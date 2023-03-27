@@ -31,11 +31,15 @@ public class BaseSetup {
     }
 
 
-    public static String getGlobalValues(String key) throws IOException {
+    public static String getGlobalValues(String key){
 
         Properties prop = new Properties();
-        FileInputStream fis = new FileInputStream(Constants.PathToConfigFile);
-        prop.load(fis);
+        try{
+            FileInputStream fis = new FileInputStream(Constants.PathToConfigFile);
+            prop.load(fis);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return prop.getProperty(key);
 
     }
@@ -44,7 +48,5 @@ public class BaseSetup {
         String resp = response.asString();
         JsonPath js = new JsonPath(resp);
         return js.get(key).toString();
-
-
     }
 }
